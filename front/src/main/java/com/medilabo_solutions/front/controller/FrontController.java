@@ -9,12 +9,12 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 public class FrontController {
 
-    private final String patientServiceUrl = "http://localhost:8080/patients";
+    private final String gatewayUrl = "http://localhost:8080";
 
-    @GetMapping("/patients")
+    @GetMapping("/front/patients")
     public String getPatients(Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        Patient[] patients = restTemplate.getForObject(patientServiceUrl, Patient[].class);
+        Patient[] patients = restTemplate.getForObject(gatewayUrl +"/patients", Patient[].class);
         model.addAttribute("patients", patients);
         return "patients"; // fichier patients.html
     }
