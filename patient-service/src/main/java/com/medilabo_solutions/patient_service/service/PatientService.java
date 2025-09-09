@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public class PatientService {
+
     private final PatientRepository repository;
 
     public PatientService(PatientRepository repository) {

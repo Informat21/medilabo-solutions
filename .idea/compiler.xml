@@ -16,6 +16,7 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
+        <module name="notes-service" />
         <module name="patient-service" />
       </profile>
     </annotationProcessing>
@@ -24,6 +25,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="front" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
+      <module name="notes-service" options="-parameters" />
       <module name="patient-service" options="-parameters" />
     </option>
   </component>
