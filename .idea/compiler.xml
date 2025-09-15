@@ -9,7 +9,7 @@
         <module name="gateway-service" />
         <module name="front" />
       </profile>
-      <profile name="Annotation profile for patient-service" enabled="true">
+      <profile name="Annotation profile for diabetes-risk-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -18,11 +18,13 @@
         </processorPath>
         <module name="notes-service" />
         <module name="patient-service" />
+        <module name="diabetes-risk-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="diabetes-risk-service" options="-parameters" />
       <module name="front" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="notes-service" options="-parameters" />

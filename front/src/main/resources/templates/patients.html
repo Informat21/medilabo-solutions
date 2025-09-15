@@ -1,11 +1,96 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Liste des patients</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9fafc;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Logo centré */
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 360px;
+            height: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        /* Tableau stylisé */
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: #2980b9;
+            color: white;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f4f6f9;
+        }
+
+        tr:hover {
+            background-color: #e8f0fe;
+        }
+
+        /* Bouton stylisé */
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-info {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #217dbb;
+        }
+    </style>
 </head>
 <body>
+
+<!-- Logo centré -->
+<div class="logo">
+    <img th:src="@{/img/logo.png}" alt="Logo">
+</div>
+
 <h1>Liste des patients</h1>
-<table border="1">
+
+<table>
     <tr>
         <th>Prénom</th>
         <th>Nom</th>
@@ -13,6 +98,7 @@
         <th>Genre</th>
         <th>Adresse</th>
         <th>Téléphone</th>
+        <th>Actions</th>
     </tr>
     <tr th:each="patient : ${patients}">
         <td th:text="${patient.prenom}"></td>
@@ -21,7 +107,77 @@
         <td th:text="${patient.genre}"></td>
         <td th:text="${patient.adresse}"></td>
         <td th:text="${patient.telephone}"></td>
+        <td>
+            <form th:action="@{'/front/patients/' + ${patient.id}}" method="get">
+                <button type="submit" class="btn btn-info">Voir détails</button>
+            </form>
+        </td>
     </tr>
 </table>
+
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Liste des patients</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Liste des patients</h1>-->
+<!--<table border="1">-->
+<!--    <tr>-->
+<!--        <th>Prénom</th>-->
+<!--        <th>Nom</th>-->
+<!--        <th>Date de naissance</th>-->
+<!--        <th>Genre</th>-->
+<!--        <th>Adresse</th>-->
+<!--        <th>Téléphone</th>-->
+<!--    </tr>-->
+<!--    <tr th:each="patient : ${patients}">-->
+<!--        <td th:text="${patient.prenom}"></td>-->
+<!--        <td th:text="${patient.nom}"></td>-->
+<!--        <td th:text="${patient.dateNaissance}"></td>-->
+<!--        <td th:text="${patient.genre}"></td>-->
+<!--        <td th:text="${patient.adresse}"></td>-->
+<!--        <td th:text="${patient.telephone}"></td>-->
+<!--        <td>-->
+<!--            <form th:action="@{'/front/patients/' + ${patient.id}}" method="get">-->
+<!--                <button type="submit" class="btn btn-info">Voir détails</button>-->
+<!--            </form>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--</table>-->
+<!--<h3>Notes des patients</h3>-->
+<!--<table border="1">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Patient ID</th>-->
+<!--        <th>Patient</th>-->
+<!--        <th>Note</th>-->
+<!--        <th>Ajouter une note</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="patient : ${patients}">-->
+<!--        <td th:text="${patient.id}"></td>-->
+<!--        <td th:text="${patient.prenom} + ' ' + ${patient.nom}"></td>-->
+
+<!--        <td>-->
+<!--            <ul>-->
+<!--                <li th:each="note : ${patient.notes}" th:text="${note.content}"></li>-->
+<!--            </ul>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            <form th:action="@{'/front/patients/' + ${patient.id} + '/notes'}" method="post">-->
+<!--                <textarea name="content" rows="3" cols="30"></textarea><br/>-->
+<!--                <button type="submit">Ajouter</button>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+
 </body>
 </html>

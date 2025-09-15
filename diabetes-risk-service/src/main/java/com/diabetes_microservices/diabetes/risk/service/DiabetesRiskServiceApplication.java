@@ -1,14 +1,13 @@
-package com.medilabo_solutions.front;
+package com.diabetes_microservices.diabetes.risk.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FrontApplication {
+public class DiabetesRiskServiceApplication {
 
 	public static void main(String[] args) {
-
-		SpringApplication.run(FrontApplication.class, args);
+		SpringApplication.run(DiabetesRiskServiceApplication.class, args);
 	}
 
 }
