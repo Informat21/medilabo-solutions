@@ -79,7 +79,7 @@ public class FrontController {
         );
 
         // Après ajout, on recharge la page des patients
-        return "redirect:/front/patients";
+        return "redirect:/front/patients/" + id;
     }
     @GetMapping("/front/patients/{id}")
     public String showPatientDetails(@PathVariable String id, Model model) {
@@ -94,6 +94,10 @@ public class FrontController {
                 new ParameterizedTypeReference<List<NoteDTO>>() {}
         ).getBody();
 
+        // 🔹 3. Récupérer le niveau de risque depuis diabetes-risk-service
+        String riskLevel = restTemplate.getForObject("http://localhost:8084/risk/patient/" + id, String.class);
+
+
         // Préparer le DTO
         PatientWithNotesDTO dto = new PatientWithNotesDTO();
         dto.setId(patient.getId());
@@ -106,8 +110,10 @@ public class FrontController {
         dto.setNotes(notes);
 
         model.addAttribute("patient", dto);
+        model.addAttribute("riskLevel", riskLevel);
 
         return "patient-details"; // une nouvelle page patient-details.html
     }
+
 
 }

@@ -9,7 +9,7 @@
         <module name="gateway-service" />
         <module name="front" />
       </profile>
-      <profile name="Annotation profile for diabetes-risk-service" enabled="true">
+      <profile name="Annotation profile for patient-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
