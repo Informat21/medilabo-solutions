@@ -108,6 +108,20 @@
         a:hover {
             background: #217dbb;
         }
+
+        .risk-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%; /* rond parfait */
+            margin-right: 6px;   /* espace entre le rond et le texte */
+        }
+
+        .red { background-color: red; }
+        .orange { background-color: orange; }
+        .yellow { background-color: yellow; }
+        .green { background-color: green; }
+
     </style>
 </head>
 <body>
@@ -120,6 +134,15 @@
     <p><strong>Genre :</strong> <span th:text="${patient.genre}"></span></p>
     <p><strong>Adresse :</strong> <span th:text="${patient.adresse}"></span></p>
     <p><strong>Téléphone :</strong> <span th:text="${patient.telephone}"></span></p>
+    <p><strong>Risque de diabète : </strong>
+        <span class="risk-dot"
+              th:classappend="${riskLevel == 'EARLY_ONSET' ? ' red' :
+                            (riskLevel == 'IN_DANGER' ? ' orange' :
+                            (riskLevel == 'BORDERLINE' ? ' yellow' :
+                            (riskLevel == 'NONE' ? ' green' : '')))}">
+        </span>
+        <span th:text="${riskLevel}"> Non disponible</span>
+    </p>
 </div>
 
 <table>
@@ -149,10 +172,6 @@
     </tbody>
 </table>
 
-<div class="risk-level">
-    <h3>Risque de diabète :</h3>
-    <p th:text="${riskLevel}">Non disponible</p>
-</div>
 
 <a th:href="@{/front/patients}">⬅ Retour à la liste des patients</a>
 

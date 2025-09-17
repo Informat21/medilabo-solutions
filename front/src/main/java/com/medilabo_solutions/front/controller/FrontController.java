@@ -110,6 +110,7 @@ public class FrontController {
         dto.setNotes(notes);
 
         model.addAttribute("patient", dto);
+        riskLevel = riskLevel.replace("\"", "");
         model.addAttribute("riskLevel", riskLevel);
 
         return "patient-details"; // une nouvelle page patient-details.html
