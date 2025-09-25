@@ -20,6 +20,10 @@ public class NoteController {
     public Note addNote(@RequestBody Note note) {
         return noteRepository.save(note);
     }
+    @GetMapping
+    public List<Note> getAllNotes() {
+        return noteRepository.findAll();
+    }
 
     // Ajouter une note via formulaire
 //    @PostMapping
