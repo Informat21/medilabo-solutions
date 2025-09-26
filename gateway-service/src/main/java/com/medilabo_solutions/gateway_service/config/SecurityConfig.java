@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.MapReactiveUserDetailsServi
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -28,6 +29,8 @@ public class SecurityConfig {
     // Configuration de la sécurité
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        RedirectServerAuthenticationSuccessHandler successHandler =
+                new RedirectServerAuthenticationSuccessHandler("/front/patients");
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable) // désactive CSRF
                 .authorizeExchange(exchange -> exchange
@@ -35,7 +38,10 @@ public class SecurityConfig {
                         .anyExchange().authenticated() // tout le reste nécessite login
                 )
                 .httpBasic(Customizer.withDefaults()) // Auth Basic (Postman / navigateur)
-                .formLogin(Customizer.withDefaults()) // Formulaire login si accès depuis navigateur
+//                .formLogin(Customizer.withDefaults()) // Formulaire login si accès depuis navigateur
+                .formLogin(form -> form
+                        .authenticationSuccessHandler(successHandler)
+                )
                 .build();
     }
 }

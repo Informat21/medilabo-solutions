@@ -28,7 +28,7 @@ public class FrontController {
     @GetMapping("/front/patients")
     public String showPatients (Model model) {
         // 1️⃣ Récupérer tous les patients depuis patient-service
-        Patient[] patients = restTemplate.getForObject("http://localhost:8081/patients", Patient[].class);
+        Patient[] patients = restTemplate.getForObject("http://patient-service:8081/patients", Patient[].class);
 
         List<PatientWithNotesDTO> patientsWithNotes = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class FrontController {
 
                 // 2️⃣ Récupérer les notes du patient depuis notes-service
                 List<NoteDTO> notes = restTemplate.exchange(
-                        "http://localhost:8083/notes/patient/" + p.getId(),
+                        "http://notes-service:8083/notes/patient/" + p.getId(),
                         HttpMethod.GET,
                         null,
                         new ParameterizedTypeReference<List<NoteDTO>>() {}
@@ -73,7 +73,7 @@ public class FrontController {
 
         // Envoyer au notes-service
         restTemplate.postForObject(
-                "http://localhost:8083/notes",
+                "http://notes-service:8083/notes",
                 newNote,
                 NoteDTO.class
         );
@@ -84,18 +84,18 @@ public class FrontController {
     @GetMapping("/front/patients/{id}")
     public String showPatientDetails(@PathVariable String id, Model model) {
         // Récupérer le patient
-        Patient patient = restTemplate.getForObject("http://localhost:8081/patients/" + id, Patient.class);
+        Patient patient = restTemplate.getForObject("http://patient-service:8081/patients/" + id, Patient.class);
 
         // Récupérer ses notes
         List<NoteDTO> notes = restTemplate.exchange(
-                "http://localhost:8083/notes/patient/" + id,
+                "http://notes-service:8083/notes/patient/" + id,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<NoteDTO>>() {}
         ).getBody();
 
         // 🔹 3. Récupérer le niveau de risque depuis diabetes-risk-service
-        String riskLevel = restTemplate.getForObject("http://localhost:8084/risk/patient/" + id, String.class);
+        String riskLevel = restTemplate.getForObject("http://diabetes-risk-service:8084/risk/patient/" + id, String.class);
 
 
         // Préparer le DTO
@@ -116,5 +116,19 @@ public class FrontController {
         return "patient-details"; // une nouvelle page patient-details.html
     }
 
+    // Afficher le formulaire pour ajouter un patient
+    @GetMapping("/front/patients/add")
+    public String showAddPatientForm(Model model) {
+        model.addAttribute("patient", new Patient());
+        return "add-patient"; // nom du template Thymeleaf
+    }
+
+    // Traiter le formulaire d'ajout
+    @PostMapping("/front/patients/add")
+    public String addPatient(Patient patient) {
+        // Envoyer le nouveau patient au patient-service
+        restTemplate.postForObject("http://patient-service:8081/patients", patient, Patient.class);
+        return "redirect:http://localhost:8080/front/patients"; // revenir à la liste
+    }
 
 }

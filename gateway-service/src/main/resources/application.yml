@@ -7,80 +7,37 @@ spring:
         name: gateway-service
   cloud:
     gateway:
-      server:
-        webflux:
-          routes:
-            - id: patient-service
-              uri: http://localhost:8081
-              predicates:
-                - Path=/patients/**
-              filters:
-                - RewritePath=/patients/(?<segment>.*), /patients/${segment}
-
-            - id: front
-              uri: http://localhost:8082
-              predicates:
-                - Path=/front/**
-#              filters:
-#                - RewritePath=/front/(?<segment>.*), /${segment}
-
-            - id: notes-service
-              uri: http://localhost:8083
-              predicates:
-                - Path=/notes/**
-              filters:
-                - RewritePath=/notes/(?<segment>.*), /notes/${segment}
-
-            - id: risk-service
-              uri: http://localhost:8084
-              predicates:
-                - Path=/risk/**
-              filters:
-                - RewritePath=/risk/(?<segment>.*), /risk/${segment}
-#server:
-#  port: 8080
-#
-#spring:
-#  application:
-#    name: gateway-service
-#  cloud:
-#    gateway:
 #      server:
 #        webflux:
-#          routes:
-#            # Route vers le front
-#            - id: front-service
-#              uri: http://localhost:8082
-#              predicates:
-#                - Path=/**
-#              filters:
-#                - RewritePath=/(?<segment>.*), /${segment}
-#
-#            # Route vers patient-service
-#            - id: patient-service
-#              uri: http://localhost:8081
-#              predicates:
-#                - Path=/patients/**
-#              filters:
-#                - RewritePath=/patients(?<segment>/?.*), /patients${segment}
-#
-#            # Route vers notes-service
-#            - id: notes-service
-#              uri: http://localhost:8083
-#              predicates:
-#                - Path=/notes/**
-#              filters:
-#                - RewritePath=/notes(?<segment>/?.*), /notes${segment}
-#
-#            # Ajouter d'autres microservices ici si nécessaire
-#            # - id: autre-service
-#            #   uri: http://localhost:808X
-#            #   predicates:
-#            #     - Path=/autre/**
-#            #   filters:
-#            #     - RewritePath=/autre(?<segment>/?.*), /autre${segment}
-#
-#logging:
-#  level:
-#    org.springframework.cloud.gateway: DEBUG
-#    reactor.netty.http.server.HttpServer: DEBUG
+      routes:
+        - id: patient-service
+          uri: http://patient-service:8081
+          predicates:
+            - Path=/patients/**
+        #              filters:
+        #                - RewritePath=/patients/(?<segment>.*), /patients/${segment}
+        - id: patient-images
+          uri: http://patient-service:8081
+          predicates:
+            - Path=/images/**
+
+        - id: front
+          uri: http://front:8082
+          predicates:
+            - Path=/front/**
+        #              filters:
+        #                - RewritePath=/front/(?<segment>.*), /${segment}
+
+        - id: notes-service
+          uri: http://notes-service:8083
+          predicates:
+            - Path=/notes/**
+          filters:
+            - RewritePath=/notes/(?<segment>.*), /notes/${segment}
+
+        - id: risk-service
+          uri: http://diabetes-risk-service:8084
+          predicates:
+            - Path=/risk/**
+          filters:
+            - RewritePath=/risk/(?<segment>.*), /risk/${segment}
