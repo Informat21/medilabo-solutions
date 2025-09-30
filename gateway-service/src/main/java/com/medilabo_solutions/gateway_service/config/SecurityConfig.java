@@ -38,7 +38,6 @@ public class SecurityConfig {
                         .anyExchange().authenticated() // tout le reste nécessite login
                 )
                 .httpBasic(Customizer.withDefaults()) // Auth Basic (Postman / navigateur)
-//                .formLogin(Customizer.withDefaults()) // Formulaire login si accès depuis navigateur
                 .formLogin(form -> form
                         .authenticationSuccessHandler(successHandler)
                 )

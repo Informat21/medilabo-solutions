@@ -25,16 +25,6 @@ public class NoteController {
         return noteRepository.findAll();
     }
 
-    // Ajouter une note via formulaire
-//    @PostMapping
-//    public Note addNote(@RequestParam String patientId,
-//                        @RequestParam String content) {
-//        Note note = new Note();
-//        note.setPatientId(patientId);
-//        note.setContent(content);
-//        return noteRepository.save(note);
-//    }
-
     @GetMapping("/patient/{patientId}")
     public List<Note> getNotesByPatient(@PathVariable String patientId) {
         return noteRepository.findByPatientId(patientId);

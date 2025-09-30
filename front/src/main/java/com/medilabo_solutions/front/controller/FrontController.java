@@ -43,13 +43,13 @@ public class FrontController {
                 dto.setAdresse(p.getAdresse());
                 dto.setTelephone(p.getTelephone());
 
-
                 // 2️⃣ Récupérer les notes du patient depuis notes-service
                 List<NoteDTO> notes = restTemplate.exchange(
                         "http://notes-service:8083/notes/patient/" + p.getId(),
                         HttpMethod.GET,
                         null,
-                        new ParameterizedTypeReference<List<NoteDTO>>() {}
+                        new ParameterizedTypeReference<List<NoteDTO>>() {
+                        }
                 ).getBody();
 
                 dto.setNotes(notes != null ? notes : new ArrayList<>());
@@ -59,7 +59,7 @@ public class FrontController {
         // 3️⃣ Passer la liste au template Thymeleaf
         model.addAttribute("patients", patientsWithNotes);
 
-        // Retourne le nom du fichier HTML sans .html
+        // Retourne le nom du fichier HTML
         return "patients";
 
     }
@@ -79,7 +79,7 @@ public class FrontController {
         );
 
         // Après ajout, on recharge la page des patients
-        return "redirect:/front/patients/" + id;
+        return "redirect:http://localhost:8080/front/patients" + id;
     }
     @GetMapping("/front/patients/{id}")
     public String showPatientDetails(@PathVariable String id, Model model) {
@@ -94,7 +94,7 @@ public class FrontController {
                 new ParameterizedTypeReference<List<NoteDTO>>() {}
         ).getBody();
 
-        // 🔹 3. Récupérer le niveau de risque depuis diabetes-risk-service
+        // Récupérer le niveau de risque depuis diabetes-risk-service
         String riskLevel = restTemplate.getForObject("http://diabetes-risk-service:8084/risk/patient/" + id, String.class);
 
 
@@ -113,7 +113,7 @@ public class FrontController {
         riskLevel = riskLevel.replace("\"", "");
         model.addAttribute("riskLevel", riskLevel);
 
-        return "patient-details"; // une nouvelle page patient-details.html
+        return "patient-details";
     }
 
     // Afficher le formulaire pour ajouter un patient
