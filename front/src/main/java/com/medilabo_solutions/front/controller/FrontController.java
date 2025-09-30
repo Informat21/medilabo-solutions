@@ -79,7 +79,7 @@ public class FrontController {
         );
 
         // Après ajout, on recharge la page des patients
-        return "redirect:http://localhost:8080/front/patients" + id;
+        return "redirect:http://localhost:8080/front/patients/" + id;
     }
     @GetMapping("/front/patients/{id}")
     public String showPatientDetails(@PathVariable String id, Model model) {
