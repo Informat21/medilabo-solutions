@@ -25,10 +25,12 @@ public class RiskController {
     }
 
     @GetMapping("/patient/{id}")
-    public RiskLevel assessRisk(@PathVariable String id) {
+    public RiskLevel assessRisk(@PathVariable Long id) {
+
+        System.out.println( "id"+ id);
         // 1️⃣ Récupérer patient depuis patient-service
         PatientDTO patient = restTemplate.getForObject("http://patient-service:8081/patients/" + id, PatientDTO.class);
-
+        System.out.println( "patient"+ patient);
         // 2️⃣ Récupérer notes depuis notes-service
         NoteDTO[] notesArray = restTemplate.getForObject("http://notes-service:8083/notes/patient/" + id, NoteDTO[].class);
         List<NoteDTO> notes = Arrays.asList(notesArray != null ? notesArray : new NoteDTO[0]);

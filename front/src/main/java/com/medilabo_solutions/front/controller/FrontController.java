@@ -43,9 +43,11 @@ public class FrontController {
                 dto.setAdresse(p.getAdresse());
                 dto.setTelephone(p.getTelephone());
 
+                String patientIdAsString = String.valueOf(p.getId());
+
                 // 2️⃣ Récupérer les notes du patient depuis notes-service
                 List<NoteDTO> notes = restTemplate.exchange(
-                        "http://notes-service:8083/notes/patient/" + p.getId(),
+                        "http://notes-service:8083/notes/patient/" + patientIdAsString,
                         HttpMethod.GET,
                         null,
                         new ParameterizedTypeReference<List<NoteDTO>>() {
@@ -64,11 +66,11 @@ public class FrontController {
 
     }
     @PostMapping("/front/patients/{id}/notes")
-    public String addNote(@PathVariable String id,
+    public String addNote(@PathVariable Long id,
                           @RequestParam String content) {
         // Créer un objet NoteDTO
         NoteDTO newNote = new NoteDTO();
-        newNote.setPatientId(id);
+        newNote.setPatientId(String.valueOf(id));
         newNote.setContent(content);
 
         // Envoyer au notes-service
@@ -82,7 +84,7 @@ public class FrontController {
         return "redirect:http://localhost:8080/front/patients/" + id;
     }
     @GetMapping("/front/patients/{id}")
-    public String showPatientDetails(@PathVariable String id, Model model) {
+    public String showPatientDetails(@PathVariable Long id, Model model) {
         // Récupérer le patient
         Patient patient = restTemplate.getForObject("http://patient-service:8081/patients/" + id, Patient.class);
 
@@ -108,6 +110,10 @@ public class FrontController {
         dto.setAdresse(patient.getAdresse());
         dto.setTelephone(patient.getTelephone());
         dto.setNotes(notes);
+
+        System.out.println("Risk Level: " + riskLevel);
+        System.out.println("dto: " + dto);
+        System.out.println("note: " + notes);
 
         model.addAttribute("patient", dto);
         riskLevel = riskLevel.replace("\"", "");

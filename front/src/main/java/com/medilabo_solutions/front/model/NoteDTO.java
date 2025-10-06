@@ -1,11 +1,13 @@
 package com.medilabo_solutions.front.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NoteDTO {
     private String id;
     private String patientId;
     private String content;
 
-    // getters et setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

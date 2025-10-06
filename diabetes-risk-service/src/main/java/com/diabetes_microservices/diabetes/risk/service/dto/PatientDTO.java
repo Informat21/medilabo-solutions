@@ -2,15 +2,15 @@ package com.diabetes_microservices.diabetes.risk.service.dto;
 
 
 public class PatientDTO {
-    private String id;
+    private Long id;
     private String prenom;
     private String nom;
     private String dateNaissance;
     private String genre;
 
-    // getters / setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getPrenom() { return prenom; }
     public void setPrenom(String prenom) { this.prenom = prenom; }

@@ -21,7 +21,7 @@ public class PatientService {
         return repository.findAll();
     }
 
-    public Optional<Patient> getPatientById(String id) {
+    public Optional<Patient> getPatientById(Long id) {
         return repository.findById(id);
     }
 
@@ -29,7 +29,7 @@ public class PatientService {
         return repository.save(patient);
     }
 
-    public void deletePatient(String id) {
+    public void deletePatient(Long id) {
         repository.deleteById(id);
     }
 }

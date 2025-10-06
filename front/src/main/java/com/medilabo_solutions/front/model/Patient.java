@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class Patient {
 
-    private String id;
+    private Long id;
     private String prenom;
     private String nom;
     private LocalDate dateNaissance;
@@ -13,11 +13,10 @@ public class Patient {
     private String adresse;
     private String telephone;
 
-    // --- Getters et Setters ---
-    public String getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(Long  id) {
         this.id = id;
     }
 

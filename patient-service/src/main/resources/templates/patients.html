@@ -102,10 +102,10 @@
         <th>Téléphone</th>
         <th>Actions</th>
     </tr>
-    <tr th:each="patient : ${patients}">
+    <tr th:each="patient : ${patients}" th:if="${patients != null}">
         <td th:text="${patient.prenom}"></td>
         <td th:text="${patient.nom}"></td>
-        <td th:text="${patient.dateNaissance}"></td>
+        <td th:text="${#temporals.format(patient.dateNaissance, 'dd/MM/yyyy')}"></td>
         <td th:text="${patient.genre}"></td>
         <td th:text="${patient.adresse}"></td>
         <td th:text="${patient.telephone}"></td>
@@ -114,6 +114,9 @@
                 <button type="submit" class="btn btn-info">Voir détails</button>
             </form>
         </td>
+    </tr>
+    <tr th:if="${patients == null or #lists.isEmpty(patients)}">
+        <td colspan="7">Aucun patient trouvé.</td>
     </tr>
 </table>
 

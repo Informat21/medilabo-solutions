@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class PatientWithNotesDTO {
-    private String id;
+    private Long id;
     private String prenom;
     private String nom;
     private LocalDate dateNaissance;
@@ -13,9 +13,9 @@ public class PatientWithNotesDTO {
     private String telephone;
     private List<NoteDTO> notes; // liste des notes du patient
 
-    // getters et setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getPrenom() { return prenom; }
     public void setPrenom(String prenom) { this.prenom = prenom; }

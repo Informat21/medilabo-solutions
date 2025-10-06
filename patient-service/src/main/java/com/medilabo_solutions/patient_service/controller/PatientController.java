@@ -22,7 +22,7 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public Patient getById(@PathVariable String id) {
+    public Patient getById(@PathVariable Long id) {
         return service.getPatientById(id).orElse(null);
     }
 
@@ -32,13 +32,13 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public Patient update(@PathVariable String id, @RequestBody Patient patient) {
+    public Patient update(@PathVariable Long id, @RequestBody Patient patient) {
         patient.setId(id);
         return service.savePatient(patient);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
+    public void delete(@PathVariable Long id) {
         service.deletePatient(id);
     }
 }
